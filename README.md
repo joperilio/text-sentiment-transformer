@@ -1,17 +1,20 @@
-# Text Sentiment Analysis Demo
+# text-sentiment-transformer
 
-This repository contains a demo project for **text sentiment analysis** using Python, FastAPI, and machine learning models. The project showcases both a **custom Keras LSTM model** and a **pre-trained Transformer model** for predicting the sentiment of a text (positive/negative).
+Demo project for **text sentiment analysis** using **FastAPI** and **Hugging Face Transformers**.
 
----
-
-## Features
-
-- REST API built with **FastAPI**.
-- Custom LSTM model trained on a small demo dataset.
-- Pre-trained Hugging Face Transformer model for higher accuracy.
-- Easy to test via `curl` or any HTTP client.
-- Saves both model and tokenizer for reuse.
+- Provides a REST API to predict sentiment of a text (POSITIVE/NEGATIVE).
+- Uses a pre-trained Transformer model (`distilbert-base-uncased-finetuned-sst-2-english`).
+- Can be run locally or inside a Docker container.
 
 ---
 
-## Project Structure
+## Quick Start
+
+### Run locally
+
+```bash
+# Install dependencies
+pip install fastapi uvicorn transformers
+
+# Start the API
+uvicorn app:app --host 0.0.0.0 --port 8000
