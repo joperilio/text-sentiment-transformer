@@ -46,16 +46,9 @@ curl -X POST http://127.0.0.1:8001/predict \
 -H "Content-Type: application/json" \
 -d '{"text":"I am not sure if I love this project!"}'
 
-Response:
-{"sentiment":"NEGATIVE","confidence":0.9982253909111023}
-
-curl -X POST http://127.0.0.1:8001/predict \
--H "Content-Type: application/json" \
--d '{"text":"I find it good"}'
-
-Response:
-{"sentiment":"POSITIVE","confidence":0.999862551689148}
-
+with secret key: 
+curl -X POST https://yourserver/predict \ -H "Content-Type: application/json" \ -H "x-api-key: supersecretkey" \
+-d '{"text":"Hello"}'
 
 ### Development Tips
 Use hot reload with uvicorn --reload for fast iteration.
