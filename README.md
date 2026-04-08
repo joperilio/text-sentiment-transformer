@@ -57,7 +57,8 @@ Make sure port 8001 (or your chosen port) is open if accessing remotely.
 
 
 ### References
-
+Generate sec keys for https
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=DE/ST=Berlin/L=Berlin/O=Demo/CN=localhost"
 
 ### Notes
 Recommended Python ≥ 3.8
