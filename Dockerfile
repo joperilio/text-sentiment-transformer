@@ -8,6 +8,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
+# Copy certificates into the image
+COPY /app/server.crt /app/server.key /app/
+
 # CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
 
 # Startbefehl mit SSL
