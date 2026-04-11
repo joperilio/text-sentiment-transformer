@@ -31,7 +31,8 @@ Build the Docker image:
 docker build -t sentiment-transformer .
 
 Run the container
-docker run -d -v $(pwd):/app -p 8001:8000 --name sentiment-transformer sentiment-transformer uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+#docker run -d -v $(pwd):/app -p 8001:8000 --name sentiment-transformer sentiment-transformer uvicorn app:app --host 0.0.0.0 --port 8000 --reload - uvicorn runs in Dockerfile, certs will be besides overwritten in /app/
+docker run -p 8001:8000 --name sentiment-transformer sentiment-transformer
 
 
 API Usage
@@ -42,20 +43,21 @@ Content-Type: application/json
 Body: {"text": "Your text here"}
 
 Example Requests
+(http do not suppose to work since https (SSL) is acivated)
 curl -X POST http://127.0.0.1:8001/predict \
 -H "Content-Type: application/json" \
--d '{"text":"I am not sure if I love this project!"}'
+-d '{"text":"I am not sure if I love this project!"}' --- will not work since it https (SSL) ist activated!!! (for testing it is good)
 
-Response:
-{"sentiment":"NEGATIVE","confidence":0.9982253909111023}
+with secret key: (this will work, pay attention for exact x-api-key to validate, otherise: results in unauthorized)
+curl -X POST https://yourserver/predict \ -H "Content-Type: application/json" \ -H "x-api-key: supersecretkey" \
+-d '{"text":"Hello"}'
 
-curl -X POST http://127.0.0.1:8001/predict \
--H "Content-Type: application/json" \
--d '{"text":"I find it good"}'
-
-Response:
-{"sentiment":"POSITIVE","confidence":0.999862551689148}
-
+Comment: 
+-k in curl stands for “insecure / ignore certificate validation”.
+Details: 
+Normal HTTPS checks the certificate against a trusted Certificate Authority (CA). 
+If the  certificate is self-signed (like in this demo), your system does not recognize the CA → curl would normally fail.
+Using -k tells curl: “Ignore the certificate warning and connect anyway.”
 
 ### Development Tips
 Use hot reload with uvicorn --reload for fast iteration.
@@ -64,7 +66,8 @@ Make sure port 8001 (or your chosen port) is open if accessing remotely.
 
 
 ### References
-
+Generate sec keys for https
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout server.key -out server.crt -subj "/C=DE/ST=Berlin/L=Berlin/O=Demo/CN=localhost"
 
 ### Notes
 Recommended Python ≥ 3.8
