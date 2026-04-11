@@ -11,8 +11,8 @@ COPY . .
 # Copy certificates into the image
 COPY /app/server.crt /app/server.key /app/
 
-# CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000"]
 
 # Startbefehl mit SSL
-CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", \
-"--ssl-certfile", "/app/server.crt", "--ssl-keyfile", "/app/server.key", "--reload"]
+#CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8000", \
+#"--ssl-certfile", "/app/server.crt", "--ssl-keyfile", "/app/server.key", "--reload"]
